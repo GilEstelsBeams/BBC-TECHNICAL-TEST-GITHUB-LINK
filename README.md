@@ -10,5 +10,5 @@ Specific features include:
 3) There are 3 potential starting points: 'default' with a 1/2 probability a cell is alive, 'drawn' where you draw yourself the alive cells, 'number' where you choose a number N such that 1/N is the probability a cell is alive.
 
 Potential improvements for this game:
--Link the file to a Front-End programme for a better presentation of the choice of parameters
--Increase the reactivity to clicks, so that the drawing of cells is smoother
+1) Link the file to a Front-End programme for a better presentation of the choice of parameters
+2) Increase the reactivity to clicks, so that the drawing of cells is smoother
