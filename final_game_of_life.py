@@ -18,7 +18,6 @@ L=50 #Length of the grid in number of cells
 torus=False #option to "delete" the borders
 
 #The starting point of the game:
-#'default': random, 
 #'drawn':player choses before starting, 
 #'number': then define 'Prob', with Prob=1/prob(starting cell is alive)
 Start='drawn' 
@@ -55,7 +54,7 @@ class cell:
 		else: self.colour=Background
 		
 	
-def set_parameters(x,y,z,w,s,p,q): #asks if the user wants to manually change the parameters
+def set_parameters(x,y,w,p,q): #asks if the user wants to manually change the parameters
 	print('If you would like to change the parameters, write Y. Otherwise press Enter.')
 	par=input('Answer')
 	if par=='Y':
@@ -63,21 +62,17 @@ def set_parameters(x,y,z,w,s,p,q): #asks if the user wants to manually change th
 		x=int(input('Answer:'))
 		print('Length of the grid in number of cells')
 		y=int(input('Answer:'))
-		print('Would you like a torus-like grid? (Answer True or press Enter)')
-		z_a=input('Answer:')
-		print("Choose the starting point:default, drawn or number")
+
+		print("Choose the starting state of the grid:drawn or number")
 		w=input('Answer:')
 		if w=='number':
 			print('Choose a positive N, with N=1/Prob(A starting cell is alive)')
 			p=int(input('Answer:'))
-		print('Speed: number of iterations per second')
-		s=int(input('Answer:'))
+
 		print('Size of each cell, between 8 and 64 advised, needs to be positive and even')
 		q=int(input('Answer:'))
-		if z_a==True:
-			z=z_ab
-
-	return [x,y,z,w,s,p,q]
+		
+	return [x,y,w,p,q]
 
 
 def count_neighbours(h,l,c,cell_list): #counts the neighbouring cells
@@ -122,15 +117,16 @@ print('Hello! Welcome to the Game of Life.')
 print('')
 print('First a few rules:')
 print('')
-print('Use the space key for starting and pausing the game')
+print('Use the space key for starting and pausing the game. The backspace is for restarting the board. Press t to switch the torus mode on or off.')
+print('Use the Up and Down arrow for increasing or decreasing the speed respectively.')
 print('Left click for making a cell alive, right click for killing it')
-print('To stop the game just close the window')
+print('To stop the game just press escape or close the window.')
 print('')
 print('Enjoy!')
 print('')
 
-[H,L,torus,Start,Speed,Prob,squares]=set_parameters(H,L,torus,Start,Speed,Prob,squares)
-
+[H,L,Start,Prob,squares]=set_parameters(H,L,Start,Prob,squares)
+print('Your game is ready to start now, the window is opened')
 pygame.init()
 
 #We first create the pygame window
@@ -148,29 +144,30 @@ screen.fill(Background)
 
 #Then we create the 2D list with all the cells
 
-cell_list=[[]for i in range(H)]
+def initiate(S):
+	cell_l=[[]for i in range(H)]
 
-for h in range(H):
-	
-	for l in range(L):
-        	x1=int(l*squares+r)
-        	x2=int(h*squares+r)
-        	
-        	if Start=='default': life=random.choice([True, False])
-        	if Start=='drawn': life=False
-        	if Start=='number':
-        		lifeb=random.choices([True,False],[1/Prob,1-1/Prob])
-        		life=lifeb[0]
+	for h in range(H):
+		
+		for l in range(L):
+	        	x1=int(l*squares+r)
+	        	x2=int(h*squares+r)
+	        	
+	        	if S=='drawn': life=False
+	        	if S=='number':
+	        		lifeb=random.choices([True,False],[1/Prob,1-1/Prob])
+	        		life=lifeb[0]
 
-        	startcell=cell([x1,x2],squares,life)
-        	cell_list[h].append(startcell)
-        	startcell.paint()
-	        pygame.draw.circle(screen,startcell.colour,startcell.location,int(squares/2))
+	        	startcell=cell([x1,x2],squares,life)
+	        	cell_l[h].append(startcell)
+	        	startcell.paint()
+	        	pygame.draw.circle(screen,startcell.colour,startcell.location,int(squares/2))
+	return(cell_l)
 
+cell_list=initiate(Start)
 #We create a copy of the cell_list so that it contains the future values
 cell_list2=cell_list
 
-if Start=='drawn':run=False
 
 while carryOn:
     
@@ -186,6 +183,18 @@ while carryOn:
         if event.type == pygame.KEYDOWN:
         	if event.key == pygame.K_SPACE:
         		run = not run
+        	if event.key == pygame.K_BACKSPACE:
+        		cell_list=initiate(Start)
+        		cell_list2=cell_list
+        	if event.key==pygame.K_t:
+        		torus= not torus
+        	if event.key==pygame.K_UP:
+        		Speed=Speed+0.5
+        	if event.key==pygame.K_DOWN:
+        		Speed=Speed-0.5
+        	if event.key==pygame.K_ESCAPE:
+        		carryOn=False
+
     	
     clicked=pygame.mouse.get_pressed()
     locm=pygame.mouse.get_pos()
