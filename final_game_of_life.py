@@ -8,7 +8,7 @@ Date: 6/2/2019
 
 """
 
-import pygame #will do a first try using pygame
+import pygame 
 import random
 
 #PARAMETERS TO SET (can be set while running the programme)
@@ -32,12 +32,12 @@ White=(255,255,255)
 Blue=(16,208,234)
 Yellow=(249,252,52)
 
-Background=Blue
-Alivecells=Yellow
+Background=White
+Alivecells=Black
 
-run=False #wether or not it starts running by itself
+run=False #wether or not it starts running by itself or wait for the space key to be pushed
 
-#FUNCTIONS USED
+# FUNCTIONS AND CLASS USED
 
 class cell:
 	def __init__(self,location,width,alive=True):
@@ -73,8 +73,6 @@ def set_parameters(x,y,z,w,s,p,q): #asks if the user wants to manually change th
 		q=int(input('Answer:'))
 		if z_a==True:
 			z=z_ab
-
-	
 
 	return [x,y,z,w,s,p,q]
 
