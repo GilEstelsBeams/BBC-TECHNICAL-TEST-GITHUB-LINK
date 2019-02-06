@@ -21,7 +21,7 @@ torus=False #option to "delete" the borders
 #'default': random, 
 #'drawn':player choses before starting, 
 #'number': then define 'Prob', with Prob=1/prob(starting cell is alive)
-Start='number' 
+Start='drawn' 
 Prob=4
 
 Speed=10 #number of iterations per second
@@ -32,10 +32,13 @@ White=(255,255,255)
 Blue=(16,208,234)
 Yellow=(249,252,52)
 
-Background=White
+Gamebackground=White
 Alivecells=Black
+Pausedbackground=Yellow
 
 run=False #wether or not it starts running by itself or wait for the space key to be pushed
+
+Background=Pausedbackground
 
 # FUNCTIONS AND CLASS USED
 
@@ -114,7 +117,7 @@ def life_or_death(n,s): #decides of the future of the cell
 
 
 #MAIN FUNCTION
-
+print('')
 print('Hello! Welcome to the Game of Life.')
 print('')
 print('First a few rules:')
@@ -172,7 +175,8 @@ if Start=='drawn':run=False
 while carryOn:
     
     #We take into account any action taken by the player
-
+    if run==False: Background=Pausedbackground
+    else: Background=Gamebackground
     clock.tick(Speed)
     clicksa=[]
     clicksd=[]
