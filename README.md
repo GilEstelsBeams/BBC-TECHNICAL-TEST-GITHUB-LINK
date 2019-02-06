@@ -1,4 +1,4 @@
-# BBC-TECHNICAL-TEST-GITHUB-LINK
+# GAME OF LIFE
 
 This programme is built using Python and especially Pygame
 
