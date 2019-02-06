@@ -4,7 +4,8 @@ This programme is built using Python and especially Pygame
 
 Although settings can be set from the file, when running the code you will have the option to modify the settings.
 
-Specific features include:
+SPECIFIC FEATURES:
+
 1) You can click on cells to make them alive or kill them
 2) You can create a "Torus-like" space where borders are actually connected to each other
 3) There are 2 potential starting points: 'drawn' where you draw yourself the alive cells, 'number' where you choose a number N such that 1/N is the probability a cell is alive.
