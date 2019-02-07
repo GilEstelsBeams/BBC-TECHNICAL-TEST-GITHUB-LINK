@@ -170,12 +170,13 @@ cell_list2=cell_list
 
 while carryOn:
     
-    #We take into account any action taken by the player
+    
     if run==False: Background=Pausedbackground
     else: Background=Gamebackground
+    
     clock.tick(Speed)
-    clicksa=[]
-    clicksd=[]
+    
+    #We take into account any action taken by the player with the keyboard
     for event in pygame.event.get(): 
         if event.type == pygame.QUIT:
             carryOn = False 
@@ -232,6 +233,7 @@ while carryOn:
     		c.paint()
     		pygame.draw.circle(screen,c.colour,c.location,int(r))
 
+    #Now we replace the list with present alive values with the values from the next round
     cell_list=cell_list2
     pygame.display.flip()       
     
