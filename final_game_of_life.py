@@ -165,6 +165,7 @@ def initiate(S):
 	return(cell_l)
 
 cell_list=initiate(Start)
+
 #We create a copy of the cell_list so that it contains the future values
 cell_list2=cell_list
 
