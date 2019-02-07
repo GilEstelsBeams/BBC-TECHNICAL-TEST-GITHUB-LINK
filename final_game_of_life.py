@@ -42,9 +42,8 @@ Background=Pausedbackground
 # FUNCTIONS AND CLASS USED
 
 class cell:
-	def __init__(self,location,width,alive=True):
-		width=int(width)
-		self.image = pygame.Surface([width, width])
+	def __init__(self,location,alive=True):
+		
 		self.state=alive
 		self.location=location
 		
@@ -74,6 +73,25 @@ def set_parameters(x,y,w,p,q): #asks if the user wants to manually change the pa
 		
 	return [x,y,w,p,q]
 
+def initiate(S, H1, L1, P, ri): #Creates the list that contains our data
+	cell_l=[[]for i in range(H1)]
+
+	for h in range(H1):
+		
+		for l in range(L1):
+	        	x1=int(l*2*ri+ri)
+	        	x2=int(h*2*ri+ri)
+	        	
+	        	if S=='drawn': life=False
+	        	if S=='number':
+	        		lifeb=random.choices([True,False],[1/P,1-1/P])
+	        		life=lifeb[0]
+
+	        	startcell=cell([x1,x2],life)
+	        	cell_l[h].append(startcell)
+	        	startcell.paint()
+	        	pygame.draw.circle(screen,startcell.colour,startcell.location,int(ri))
+	return(cell_l)
 
 def count_neighbours(h,l,c,cell_list): #counts the neighbouring cells
 	n=0
@@ -144,27 +162,7 @@ screen.fill(Background)
 
 #Then we create the 2D list with all the cells
 
-def initiate(S):
-	cell_l=[[]for i in range(H)]
-
-	for h in range(H):
-		
-		for l in range(L):
-	        	x1=int(l*squares+r)
-	        	x2=int(h*squares+r)
-	        	
-	        	if S=='drawn': life=False
-	        	if S=='number':
-	        		lifeb=random.choices([True,False],[1/Prob,1-1/Prob])
-	        		life=lifeb[0]
-
-	        	startcell=cell([x1,x2],squares,life)
-	        	cell_l[h].append(startcell)
-	        	startcell.paint()
-	        	pygame.draw.circle(screen,startcell.colour,startcell.location,int(squares/2))
-	return(cell_l)
-
-cell_list=initiate(Start)
+cell_list=initiate(Start,H,L,Prob,r)
 
 #We create a copy of the cell_list so that it contains the future values
 cell_list2=cell_list
@@ -185,7 +183,7 @@ while carryOn:
         	if event.key == pygame.K_SPACE:
         		run = not run
         	if event.key == pygame.K_BACKSPACE:
-        		cell_list=initiate(Start)
+        		cell_list=initiate(Start,H,L,Prob,r)
         		cell_list2=cell_list
         	if event.key==pygame.K_t:
         		torus= not torus
@@ -209,7 +207,7 @@ while carryOn:
 
     		c=cell_list[h][l]
 
-    		cell_list2[h][l]=cell(c.location,squares,c.state)
+    		cell_list2[h][l]=cell(c.location,c.state)
     		c2=cell_list2[h][l]
 
     		n=count_neighbours(h,l,c,cell_list)
@@ -232,7 +230,7 @@ while carryOn:
 
 	    	
     		c.paint()
-    		pygame.draw.circle(screen,c.colour,c.location,int(squares/2))
+    		pygame.draw.circle(screen,c.colour,c.location,int(r))
 
     cell_list=cell_list2
     pygame.display.flip()       
