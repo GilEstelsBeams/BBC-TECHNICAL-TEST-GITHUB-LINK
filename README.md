@@ -4,6 +4,8 @@ This programme is built using Python and especially Pygame
 
 Although settings can be set from the file, when running the code you will have the option to modify the settings.
 
+You need to have pygame working to play this game. For mac users, homebrew's installation of python does not properly install python and the version from the official website is needed. Then run 'pip3 install pygame' .
+
 SPECIFIC FEATURES:
 
 1) You can click on cells to make them alive or kill them
