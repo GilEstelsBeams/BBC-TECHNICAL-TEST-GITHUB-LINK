@@ -1,13 +1,3 @@
-"""
-===================
-BBC Technical Test
-===================
-
-Author: GilEstelsBeams
-Date: 6/2/2019
-
-"""
-
 import pygame
 import random
 
